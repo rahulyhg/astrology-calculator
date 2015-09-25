@@ -67,7 +67,6 @@ $this->registerCss("
 		<div class="text-center">
 			<h2>Astrological Birth Sign Calculator</h2>
 		</div>
-	
 		<div class="calculator">
 			<form>
 				<div class="form-group col-lg-7 col-md-7 col-sm-7 col-xs-12">
@@ -124,63 +123,84 @@ $this->registerCss("
 
 <?php 
 $this->registerJs('
+	function isValidDate(day,month,year){
+		if( isNaN(day) || isNaN(month) || isNaN(year) ){
+			return false;
+		}
+		
+		if( year < 1800 || year > 9999 ){
+			return false;
+		}
+		
+		var numOfDays = [31,28,31,30,31,30,31,31,30,31,30,31];  
+		if(month==2){
+			var lyear = false;  
+			if( (!(year % 4) && year % 100) || !(year % 400) ){  
+				lyear = true;  
+			}  
+			if( (lyear==false) && (day>=29) ){  
+				return false;  
+		    }  
+		    if( (lyear==true) && (day>29) ){  
+				return false;  
+			}  
+		}
+		else if(month>0||month<=12){  
+			if (day>numOfDays[month-1]){  
+				return false;  
+			}  
+		}
+		else{
+			return false;
+		}
+		return true;	
+	}
 	$(document).ready(function(){
 		$("#birth_date_button").on("click",function(){
 			var birthDate=$("#birth_date").val();
 			birthDateAry=birthDate.split("-");
-			var birthyear = birthDateAry[0] * 1 ;
-			var	month = birthDateAry[1] * 1 ;
-			var	date = birthDateAry[2] * 1 ;
-			var start = 1901;
-			var value = "" ;
+			var birthYear = birthDateAry[0] * 1 ;
+			var	birthMonth = birthDateAry[1] * 1 ;
+			var	birthDay  = birthDateAry[2] * 1 ;
 			
-			<!-- This script and many more are available free online at -->
-			<!-- The JavaScript Source!! http://javascript.internet.com -->
-			<!-- Original:  Timothy Joko-Veltman (restlessperegrine@yahoo.com ) -->
-			<!-- Begin 
-			if (month == 1 && date >=20 || month == 2 && date <=18) {value = "Aquarius";}
-			if (month == 1 && date > 31) {value = "Huh?";}
-			if (month == 2 && date >=19 || month == 3 && date <=20) {value = "Pisces";}
-			if (month == 2 && date > 29) {value = "Say what?";}
-			if (month == 3 && date >=21 || month == 4 && date <=19) {value = "Aries";}
-			if (month == 3 && date > 31) {value = "OK.  Whatever.";}
-			if (month == 4 && date >=20 || month == 5 && date <=20) {value = "Taurus";}
-			if (month == 4 && date > 30) {value = "I\'m soooo sorry!";}
-			if (month == 5 && date >=21 || month == 6 && date <=21) {value = "Gemini";}
-			if (month == 5 && date > 31) {value = "Umm ... no.";}
-			if (month == 6 && date >=22 || month == 7 && date <=22) {value = "Cancer";}
-			if (month == 6 && date > 30) {value = "Sorry.";}
-			if (month == 7 && date >=23 || month == 8 && date <=22) {value = "Leo";}
-			if (month == 7 && date > 31) {value = "Excuse me?";}
-			if (month == 8 && date >=23 || month == 9 && date <=22) {value = "Virgo";}
-			if (month == 8 && date > 31) {value = "Yeah. Right.";}
-			if (month == 9 && date >=23 || month == 10 && date <=22) {value = "Libra";}
-			if (month == 9 && date > 30) {value = "Try Again.";}
-			if (month == 10 && date >=23 || month == 11 && date <=21) {
-				value = "Scorpio";}
-			if (month == 10 && date > 31) {value = "Forget it!";}
-			if (month == 11 && date >=22 || month == 12 && date <=21) {value = "Sagittarius";}
-			if (month == 11 && date > 30) {value = "Invalid Date";}
-			if (month == 12 && date >=22 || month == 1 && date <=19) {value = "Capricorn";}
-			if (month == 12 && date > 31) {value = "No way!";}
-			$("#sunsign").html(value);
+			var sunsign = ":(" ;
+			var chinesesign=":(";
+
+			if(isValidDate(birthDay,birthMonth,birthYear)){
+				var startYear = 1901;
+				if( (birthMonth == 1 && birthDay >=20) || (birthMonth == 2 && birthDay <=18) ){sunsign="Aquarius";}
+				if( (birthMonth == 2 && birthDay >=19) || (birthMonth == 3 && birthDay <=20) ){sunsign="Pisces";}
+				if( (birthMonth == 3 && birthDay >=21) || (birthMonth == 4 && birthDay <=19) ){sunsign="Aries";}
+				if( (birthMonth == 4 && birthDay >=20) || (birthMonth == 5 && birthDay <=20) ){sunsign="Taurus";}
+				if( (birthMonth == 5 && birthDay >=21) || (birthMonth == 6 && birthDay <=21) ){sunsign="Gemini";}
+				if( (birthMonth == 6 && birthDay >=22) || (birthMonth == 7 && birthDay <=22) ){sunsign="Cancer";}
+				if( (birthMonth == 7 && birthDay >=23) || (birthMonth == 8 && birthDay <=22) ){sunsign="Leo";}
+				if( (birthMonth == 8 && birthDay >=23) || (birthMonth == 9 && birthDay <=22) ){sunsign="Virgo";}
+				if( (birthMonth == 9 && birthDay >=23) || (birthMonth == 10 && birthDay <=22) ){sunsign="Libra";}
+				if( (birthMonth == 10 && birthDay >=23) || (birthMonth == 11 && birthDay <=21) ){sunsign="Scorpio";}
+				if( (birthMonth == 11 && birthDay >=22) || (birthMonth == 12 && birthDay <=21) ){sunsign="Sagittarius";}
+				if( (birthMonth == 12 && birthDay >=22) || (birthMonth == 1 && birthDay <=19) ){sunsign="Capricorn";}
 			
-			x = (start - birthyear) % 12;
-			if (x == 1 || x == -11) {value = "Rat";}
-			if (x == 0) {value = "Ox";}
-			if (x == 11 || x == -1) {value = "Tiger";}
-			if (x == 10 || x == -2) {value = "Rabbit/Cat";}
-			if (x == 9 || x == -3)  {value = "Dragon";}
-			if (x == 8 || x == -4)  {value ="Snake";}
-			if (x == 7 || x == -5)  {value = "Horse";}
-			if (x == 6 || x == -6)  {value = "Sheep";}
-			if (x == 5 || x == -7)  {value = "Monkey";}
-			if (x == 4 || x == -8)  {value = "Cock/Phoenix";}
-			if (x == 3 || x == -9)  {value = "Dog";}
-			if (x == 2 || x == -10)  {value = "Boar";}  
+				var cm=(startYear-birthYear)%12;
+				if(cm == 1 || cm == -11){chinesesign = "Rat";}
+				if(cm == 0){chinesesign = "Ox";}
+				if(cm == 11 || cm == -1){chinesesign = "Tiger";}
+				if(cm == 10 || cm == -2){chinesesign = "Rabbit/Cat";}
+				if(cm == 9 || cm == -3){chinesesign = "Dragon";}
+				if(cm == 8 || cm == -4){chinesesign ="Snake";}
+				if(cm == 7 || cm == -5){chinesesign = "Horse";}
+				if(cm == 6 || cm == -6){chinesesign = "Sheep";}
+				if(cm == 5 || cm == -7){chinesesign = "Monkey";}
+				if(cm == 4 || cm == -8){chinesesign = "Cock/Phoenix";}
+				if(cm == 3 || cm == -9){chinesesign = "Dog";}
+				if(cm == 2 || cm == -10){chinesesign = "Boar";}  
+			}
+			else{
+					
+			}
 			
-			$("#chinesesign").html(value);
-			//  End -->	
+			$("#sunsign").html(sunsign);
+			$("#chinesesign").html(chinesesign);
 		});
 	});
 
