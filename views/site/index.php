@@ -21,6 +21,20 @@ $this->registerCss("
 		border-radius: 0;
 	}
 	
+	.day-select,.month-select,.year-select{
+		font-size: 16px;
+		padding: 18px 15px 17px;
+		height: auto;
+		line-height: inherit;
+		border-radius: 0;
+		display:inline-block;
+		margin-right:15px;
+	}
+	
+	.day-select{width:100px;}
+	.month-select{width:140px;}
+	.year-select{width:115px;}
+	
 	#birth_date_button{
 		font-size: 20px;
 		border-radius: 0;
@@ -45,6 +59,21 @@ $this->registerCss("
 			border-radius: 0;
 		}
 		
+		.day-select,.month-select,.year-select{
+			font-size: 14px;
+			padding: 14px 9px;
+			height: auto;
+			line-height: inherit;
+			border-radius: 0;
+			display:inline-block;
+			margin-right:5px;
+			margin-bottom:5px;
+		}
+		
+		.day-select{width:80px;}
+		.month-select{width:120px;}
+		.year-select{width:100px;}
+	
 		#birth_date_button, #birth_date_button:hover{
 			font-size: 15px;
 			border-radius: 0;
@@ -53,7 +82,7 @@ $this->registerCss("
 	}
 	
 	@media screen and (min-width: 769px) and (max-width: 992px) {
-		.calculator{ padding:40px 50px;}
+		.calculator{ padding:40px 30px;}
 	}
 	
 	@media screen and (min-width: 993px) and (max-width: 1200px) {
@@ -69,9 +98,36 @@ $this->registerCss("
 		</div>
 		<div class="calculator">
 			<form>
-				<div class="form-group col-lg-7 col-md-7 col-sm-7 col-xs-12">
+				<div class="form-group col-lg-7 col-md-7 col-sm-8 col-xs-12">
 					<div>
-						<?= yii\jui\DatePicker::widget([
+						<select class="form-control day-select" id="day-select">
+							<option value="">Day</option>
+							<?php
+							for($d=0;$d<=31;$d++){
+								echo '<option value="'.$d.'">'.$d.'</option>';
+							}
+							?>
+						</select>
+						<select class="form-control month-select" id="month-select">
+							<option value="">Month</option>
+							<?php
+							$months=[1=>'January',2=>'February', 3=>'March', 4=>'April', 5=>'May', 6=>'June', 7=>'July', 8=>'August', 9=>'September', 10=>'October', 11=>'November', 12=>'December'] ;
+							for($m=1;$m<=12;$m++){
+								echo '<option value="'.$m.'">'.$months[$m].'</option>';
+							}
+							?>
+						</select>
+						<select class="form-control year-select" id="year-select">
+							<option value="">Year</option>
+							<?php
+							for($y=date('Y');$y>=1800;$y--){
+								echo '<option value="'.$y.'">'.$y.'</option>';
+							}
+							?>
+						</select>
+						<?php
+						/*
+						echo yii\jui\DatePicker::widget([
 								'name' => 'birth_date',
 								'dateFormat' => 'yyyy-MM-dd',
 								'options' => [
@@ -84,10 +140,12 @@ $this->registerCss("
 									'changeMonth' => true,
 									'changeYear' => true,	
 								] 
-							])?>
+							])
+						*/
+						?>
 					</div>
 				</div>
-				<div class="form-group col-lg-5 col-md-5 col-sm-5 col-xs-12">
+				<div class="form-group col-lg-5 col-md-5 col-sm-4 col-xs-12">
 					<input type="button" id="birth_date_button" class="btn btn-primary" value="Calculate" />
 				</div>
 				<div class="clearfix"></div>
@@ -157,11 +215,15 @@ $this->registerJs('
 	}
 	$(document).ready(function(){
 		$("#birth_date_button").on("click",function(){
-			var birthDate=$("#birth_date").val();
-			birthDateAry=birthDate.split("-");
-			var birthYear = birthDateAry[0] * 1 ;
-			var	birthMonth = birthDateAry[1] * 1 ;
-			var	birthDay  = birthDateAry[2] * 1 ;
+			//var birthDate=$("#birth_date").val();
+			//birthDateAry=birthDate.split("-");
+			//var birthYear = birthDateAry[0] * 1 ;
+			//var	birthMonth = birthDateAry[1] * 1 ;
+			//var	birthDay  = birthDateAry[2] * 1 ;
+			
+			var birthYear= $("#year-select").val() * 1;
+			var	birthMonth= $("#month-select").val() * 1;
+			var	birthDay= $("#day-select").val() * 1;
 			
 			var sunsign = ":(" ;
 			var chinesesign=":(";
