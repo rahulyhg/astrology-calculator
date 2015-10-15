@@ -103,7 +103,7 @@ $this->registerCss("
                             <select class="form-control day-select" id="day-select">
                                 <option value="">Day</option>
                                 <?php
-                                for($d=0;$d<=31;$d++){
+                                for($d=1;$d<=31;$d++){
                                     echo '<option value="'.$d.'">'.$d.'</option>';
                                 }
                                 ?>
