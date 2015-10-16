@@ -94,7 +94,7 @@ $this->registerCss("
     <div class="site-index">
         <div class="body-content">
             <div class="text-center">
-                <h2>Astrological Birth Sign Calculator</h2>
+                <h2>Free Astrological Zodiac Sign Calculator</h2>
             </div>
             <div class="calculator">
                 <form>
