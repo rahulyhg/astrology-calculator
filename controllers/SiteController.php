@@ -52,6 +52,11 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+	public function actionTimer(){
+		return $this->render('timer');	
+	}
+	
+	/*
     public function actionLogin()
     {
         if (!\Yii::$app->user->isGuest) {
@@ -91,4 +96,5 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+	*/
 }
